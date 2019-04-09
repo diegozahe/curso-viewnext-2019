@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>Ejemplo HTML5</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <header>
+        <h1>4_formularios.html</h1>
+    </header>
+    <!-- <input id="identificador"><br><br> -->
+    <form action="#" method="GET">
+        <p>Nombre:</p>
+        <input id="nombre" type="text" size="20" maxlength="20">
+        <p>Apellidos:</p>
+        <input id="apellidos" type="text" size="40" maxlength="40" required="true">
+        <p>Contraseña:</p>
+        <input id="password" type="password" placeholder="Contraseña">
+        <p>Color:</p>
+        <input id="color" type="color" placeholder="Color">
+        <p>Telefono:</p>
+        <input id="telefono" type="number" placeholder="Telefono">
+        <p>Terminos y condiciones:</p>
+        <input id="checkbox" type="checkbox" value="Check">
+        <input id="button" type="button" value="Pulsar">
+        <input type="submit" value="Enviar">
+    </form>
+    <script>
+        var variable = "Un valor de texto";
+        console.log("Valor variable" + variable);
+        if(typeof(otravariable)==="undefined");
+        console.log("otra variable SIN definir");
+
+        variableGlobal = "Otro valor";
+        console.log(variableGlobal);
+        
+        var miNumero = 200;
+        console.log("Mi numero = "+miNumero);
+        
+        minumero = 1/0;
+        console.log("Mi numero = "+miNumero);
+
+        if(! isNaN("Hhh")){
+            miNumero = parseInt("Hhh");
+            console.log("Mi numero = "+miNumero);
+        }else{
+            alert("No es un numero");
+        }
+
+        miNumero = 1/variable;
+        console.log("Mi numero = "+miNumero);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+nav {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+header{
+    background-color: red;
+    color:blue;
+    font-size: 30;
+}
+
+h1, h2 {
+    padding: 30;
+}
+
+.fondo-verde{
+    background-color: green;
+}
+
+#barra-lateral {
+    font-weight: bolder;
+}
+
+

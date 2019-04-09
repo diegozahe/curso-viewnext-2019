@@ -1,0 +1,33 @@
+.h1 {
+    text-align: center;
+}
+.form-order {
+    border: 1px solid black;
+    padding: 30px;
+    width: 200px;
+    margin: auto;
+}   
+.form-order label {
+    font-weight: bold;
+}
+
+.form-order input {
+    margin-bottom: 20px;
+    width: 100%;
+}
+.form-order .button {
+    width: 49%;
+    text-align: center;
+}
+
+/* Ejemplo de display inline-block contra display: flex */
+.block {
+    display: inline-block;
+    width: 12em;
+    height: 5em;
+    background-color: blue;
+    margin: 5px;
+}
+
+
+
