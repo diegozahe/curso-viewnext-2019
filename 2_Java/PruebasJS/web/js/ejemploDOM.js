@@ -29,6 +29,7 @@ $("#marco").html($("#marco").html() + "Otro texto desde jQuery");
 $(".unaClase").each(function(index) {
     $(this).text(" - "+index+"!!");
 });
+
 /*
 var arrayLIs = document.getElementsByClassName("unaClase");
 for (var i = 0; i< arrayLIs.length; i++){
