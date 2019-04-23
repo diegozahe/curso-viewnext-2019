@@ -57,9 +57,6 @@ public class ServicioUsuarios {
             this.listaUsuarios.add(nuevoUsu);
 
         } else {
-            if (true) {
-                return true;
-            }
             this.bdUsu.crear(nuevoUsu);
             this.listaUsuarios.add(nuevoUsu);
         }
@@ -84,5 +81,15 @@ public class ServicioUsuarios {
     public int cantidadUsuarios() {
         return listaUsuarios.size();
     }
-
+    
+     public boolean deleteUsuario(String email, String passwd) {
+        for (Usuario user : listaUsuarios) {
+            if (user.getEmail().equals(email)) {
+                this.listaUsuarios.remove(user);
+                this.bdUsu.delete(user);
+                return true;
+            }
+        }
+        return false;
+    }
 }

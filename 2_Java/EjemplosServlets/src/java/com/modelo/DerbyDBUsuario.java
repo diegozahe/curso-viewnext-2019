@@ -91,18 +91,20 @@ public class DerbyDBUsuario {
         return false;
     }
 
-    public boolean delete(Usuario user) {
-        try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/UsuariosVNext", "administrador", "1234")) {
-            String sqlID = "DELETE FROM Usuario WHERE email=" + user.getEmail();
-            Statement sentencia = con.createStatement(); // creamos primero la sentencia
-            sentencia.executeUpdate(sqlID); // ahora hacemos la consulta
+     public boolean delete(Usuario user) {
+
+        try (Connection con = DriverManager.getConnection(
+                "jdbc:derby://localhost:1527/UsuariosVNext", "administrador", "1234")) {
+            String sqlID = "DELETE FROM Usuario WHERE email='" + user.getEmail() + "'";
+            Statement sentencia = con.createStatement();
+            sentencia.executeUpdate(sqlID);
             return true;
         } catch (SQLException ex) {
-            System.err.println(" >>>>>> " + ex.getMessage());
+            System.err.println(" >>>>  " + ex.getMessage());
+            return false;
         }
-        return false;
-    }
-
+     }
+     
     public boolean update(Usuario user) {
         try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/UsuariosVNext", "administrador", "1234")) {
             // Actualizamos los datos
@@ -124,7 +126,7 @@ public class DerbyDBUsuario {
     public boolean isAlive(Usuario user) {
         try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/UsuariosVNext", "administrador", "1234")) {
             // Buscamos si existe
-            String consultaSQL = "SELECT id, nombre, edad, email, password FROM Usuario WHERE email='" + user.getEmail()+"'";
+            String consultaSQL = "SELECT id, nombre, edad, email, password FROM Usuario WHERE email='" + user.getEmail() + "'";
             Statement sentencia = con.createStatement(); // creamos primero la sentencia
             ResultSet res = sentencia.executeQuery(consultaSQL); // ahora hacemos la consulta
             int id = -1;
@@ -137,8 +139,8 @@ public class DerbyDBUsuario {
                 email = res.getString("email");
                 password = res.getString("password");
             }
-            
-            if (id > 0 && email.equals(user.getEmail()) ) {
+
+            if (id > 0 && email.equals(user.getEmail())) {
                 return true;
             }
         } catch (SQLException ex) {
@@ -147,4 +149,5 @@ public class DerbyDBUsuario {
         return false;
     }
 
-}
+    }
+
