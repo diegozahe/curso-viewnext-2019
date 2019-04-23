@@ -46,9 +46,6 @@ public class ServicioUsuarios {
             this.bdUsu.update(nuevoUsu);
             for (Usuario usu : listaUsuarios) {
                 if (usu.getEmail().equals(email)) {
-                    if (true) {
-                        return true;
-                    }
                     listaUsuarios.remove(usu);
                     break;
                 }
@@ -57,9 +54,6 @@ public class ServicioUsuarios {
             this.listaUsuarios.add(nuevoUsu);
 
         } else {
-            if (true) {
-                return true;
-            }
             this.bdUsu.crear(nuevoUsu);
             this.listaUsuarios.add(nuevoUsu);
         }
@@ -85,4 +79,26 @@ public class ServicioUsuarios {
         return listaUsuarios.size();
     }
 
+    public boolean setUserLogged(String email){
+        for (Usuario usu : listaUsuarios) {
+            if (usu.getEmail().equals(email)) {
+                this.userLogged = usu;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public Usuario getUserLogged(){
+        return this.userLogged;
+    }
+    
+    public ArrayList<Usuario> listar(){
+        
+        
+        return this.listaUsuarios;
+    }
+    
+    
+    
 }

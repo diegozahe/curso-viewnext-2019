@@ -42,9 +42,62 @@ public class Login extends HttpServlet {
             out.println("<title>Leyendo parámetros ParamServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            if(su.validacionPasswd(email, pass)){
-                out.println("Son correctos el correo y la contraseña");
-            }else{
+            if (su.validacionPasswd(email, pass)) {
+                String valor = (su.setUserLogged(email)) ? "Login correcto" : "Login fallido :-/";
+                out.println(valor);
+                /*
+                out.println("<form name=\"form1\" method=\"post\" action=\"/EjemplosServlets/RegistroServlet\">\n"
+                        + "            <table border=\"1\">\n"
+                        + "                <tr>\n"
+                        + "                    <td>Nombre:</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"text\" name=\"nom\" id=\"nom\" size=\"25\" value='" + su.getUserLogged().getNombre() + "' required=\"required\"/>\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td>Contraseña</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"password\" name=\"pass\" id=\"pass\" size=\"25\" value=" + su.getUserLogged().getPassword() + " required=\"required\"/>\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td>Edad:</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"number\" name=\"eda\" id=\"eda\" size=\"25\" placeholder=" + su.getUserLogged().getEdad() + ">\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td>Email:</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"email\" name=\"email\" id=\"email\" size=\"25\" value=" + su.getUserLogged().getEmail() + " required=\"required\"/>\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "            </table>\n"
+                        + "                <input type=\"submit\" value=\"Actualizar\"/>\n"
+                        + "        </form>");
+
+                // Cargamos una tabla invisible con los datos para poder eliminar
+                out.println("<div>"
+                        + "         <form name=\"form2\" method=\"post\" action=\"/EjemplosServlets/RegistroServlet\">\n"
+                        + "            <table style='display:none;' border=\"1\">\n"
+                        + "                <tr>\n"
+                        + "                    <td>Contraseña</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"password\" name=\"pass\" id=\"pass\" size=\"25\" value=" + su.getUserLogged().getPassword() + " required=\"required\"/>\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td>Email:</td>\n"
+                        + "                    <td>\n"
+                        + "                        <input type=\"email\" name=\"email\" id=\"email\" size=\"25\" value=" + su.getUserLogged().getEmail() + " required=\"required\"/>\n"
+                        + "                    </td>\n"
+                        + "                </tr>\n"
+                        + "            </table>\n"
+                        + "                <input style='' type=\"submit\" value=\"Eliminar\"/>\n"
+                        + "        </form>"
+                        + "</div>");*/
+
+            } else {
                 out.println("El correo y la contraseña no coinciden con ningun usuario registrado");
             }
             out.println("</body>");
