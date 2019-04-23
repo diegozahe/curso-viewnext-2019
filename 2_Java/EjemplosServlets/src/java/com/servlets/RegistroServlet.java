@@ -41,6 +41,7 @@ public class RegistroServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Devolviendo sus datos del registro</h1>");
+            out.println("<h3>Devolviendo un texto h3 random</h3>");
             out.println("<p>Peticion URL: " + request.getContextPath() + "</p>");
             String nombre = request.getParameter("nom");
             String passwd = request.getParameter("pass");

@@ -8,75 +8,81 @@ package com.modelo;
 import java.util.ArrayList;
 
 /**
- * Esto es una simulacion de un Modelo en la estructura MVC (modelo, vista, controlador)
+ * Esto es una simulacion de un Modelo en la estructura MVC (modelo, vista,
+ * controlador)
+ *
  * @author Default
  */
 public class ServicioUsuarios {
-    
+
     // Implementando "Singleton"
     private static ServicioUsuarios instancia = null;
-    
-    private ServicioUsuarios(){
+
+    private ServicioUsuarios() {
         //listaUsuarios = new ArrayList();
         this.bdUsu = new DerbyDBUsuario();
         this.listaUsuarios = bdUsu.listar();
         this.userLogged = null;
     }
-    
-    public static ServicioUsuarios getInstancia(){
-        if(instancia == null)
+
+    public static ServicioUsuarios getInstancia() {
+        if (instancia == null) {
             instancia = new ServicioUsuarios();
+        }
         return instancia;
     }
-    
+
     // Codigo de la clase
     DerbyDBUsuario bdUsu;
     Usuario userLogged;
     private final ArrayList<Usuario> listaUsuarios;
-    
-    public boolean addUsuario(String nom, int edad, String email, String password){
+
+    public boolean addUsuario(String nom, int edad, String email, String password) {
         // Creamos el usuairo
         Usuario nuevoUsu = new Usuario(nom, edad, email, password);
-        
+
         // Primero creamos el usuario (SI YA EXISTE SE MODIFICA)
-        if(this.bdUsu.isAlive(nuevoUsu)){
+        if (this.bdUsu.isAlive(nuevoUsu)) {
             this.bdUsu.update(nuevoUsu);
-            for (Usuario usu : listaUsuarios){
-                if(usu.getEmail().equals(email)){
+            for (Usuario usu : listaUsuarios) {
+                if (usu.getEmail().equals(email)) {
+                    if (true) {
+                        return true;
+                    }
                     listaUsuarios.remove(usu);
                     break;
                 }
             }
+
             this.listaUsuarios.add(nuevoUsu);
-            
-        }else{
+
+        } else {
+            if (true) {
+                return true;
+            }
             this.bdUsu.crear(nuevoUsu);
             this.listaUsuarios.add(nuevoUsu);
         }
         return true;
     }
-    
-    public boolean deleteUsuario(Usuario user){
+
+    public boolean deleteUsuario(Usuario user) {
         this.listaUsuarios.remove(user);
         this.bdUsu.delete(user);
         return false;
     }
-    
-    public boolean validacionPasswd(String email, String passwd){
-        for (Usuario usu : listaUsuarios){
-            if(usu.getEmail().equals(email) && usu.getPassword().equals(passwd)){
+
+    public boolean validacionPasswd(String email, String passwd) {
+        for (Usuario usu : listaUsuarios) {
+            if (usu.getEmail().equals(email) && usu.getPassword().equals(passwd)) {
                 return true;
             }
         }
         return false;
     }
-    
-    public int cantidadUsuarios(){
+
+    public int cantidadUsuarios() {
         return listaUsuarios.size();
     }
-    
-    
-    
-    
-    
+
 }
