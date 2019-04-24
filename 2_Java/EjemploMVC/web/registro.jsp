@@ -34,6 +34,5 @@
                 <input type="hidden" name="accion" id="accion" value="registro">
                 <input type="submit" value="Actualizar"/>
         </form>
-        <h1>Hello World!</h1>
     </body>
 </html>

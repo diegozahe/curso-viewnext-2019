@@ -6,12 +6,14 @@
 package com.viewnext.controladores;
 
 import com.modelo.ServicioUsuarios;
+import com.modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,34 +34,40 @@ public class UsuariosController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String id = request.getParameter("id");
             String nom = request.getParameter("nom");
             String email = request.getParameter("email");
             String edad = request.getParameter("eda");
             String passwd = request.getParameter("pass");
             String accion = request.getParameter("accion");
-            boolean realizado;
+            
             switch (accion) {
                 case "registro":
-                    realizado = ServicioUsuarios.getInstancia().addUsuario(nom, edad, email, passwd);
-                    if (realizado) {
+                    if (ServicioUsuarios.getInstancia().addUsuario(nom, edad, email, passwd)) {
                         out.println("<h3>Registrado correctamente</h3>");
                     } else {
                         out.println("<h3>No se ha Registrado</h3>");
                     }
                     break;
                 case "login":
-                    realizado = ServicioUsuarios.getInstancia().setUserLogged(email, passwd);
-                    if (realizado) {
-                        out.println("<h3>Logueado correctamente</h3>");
-                        out.println("<a href='profile.jsp'>Ir a mi perfil</a>");
+                    if (ServicioUsuarios.getInstancia().validacionPasswd(email, passwd)) {
+                        out.println("<h3>Login correcto</h3>");
+                         HttpSession sesion = request.getSession();
+                         Usuario usu = ServicioUsuarios.getInstancia().obtenerUno(email);
+                         sesion.setAttribute("ususario", usu);
+                         request.getRequestDispatcher("index.jsp").forward(request, response);
                     } else {
-                        out.println("<h3>No se ha podido loguear</h3>");
-                        out.println("<a href='index.jsp'>Volver a intentar</a>");
+                        out.println("<h3>Login incorrecto/h3>");
                     }
                     break;
                 case "delete":
                     break;
                 case "update":
+                    break;
+                case "PUT":
+                    ServicioUsuarios.getInstancia().modificarUsuario(id, nom, edad, email, passwd);
+                    request.getRequestDispatcher("listar.jsp").forward(request, response);
+                            
                     break;
                     
             }

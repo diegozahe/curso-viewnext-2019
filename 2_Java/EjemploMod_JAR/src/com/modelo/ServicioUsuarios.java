@@ -36,24 +36,51 @@ public class ServicioUsuarios {
     // Codigo de la clase
     DerbyDBUsuario bdUsu;
     Usuario userLogged;
-    private final ArrayList<Usuario> listaUsuarios;
+    private ArrayList<Usuario> listaUsuarios;
 
     public boolean addUsuario(String nom, String edad, String email, String password) {
         try {
             if (nom.equals("") || edad.equals("") || email.equals("") || password.equals("")) {
                 return false;
             } else {
-                int iEdad = Integer.parseInt(edad);
                 // Creamos el usuario
-                Usuario nuevoUsu = new Usuario(nom, Integer.parseInt(edad), email, password);
+                int iEdad = Integer.parseInt(edad);
+                Usuario nuevoUsu = new Usuario(null, nom, Integer.parseInt(edad), email, password);
                 // Primero creamos el usuario (SI YA EXISTE SE MODIFICA)
-                if (!this.bdUsu.isAlive(nuevoUsu)) {
-                    this.bdUsu.crear(nuevoUsu);
-                    return this.listaUsuarios.add(nuevoUsu);
-                }
+                //if (!this.bdUsu.isAlive(nuevoUsu)) {
+                    boolean creado = this.bdUsu.crear(nuevoUsu);
+                    this.listaUsuarios = bdUsu.listar();
+                    return this.listaUsuarios != null && creado;
+                //}
             }
         } catch (Exception ex) {
             System.err.println(" << ERROR: No se ha podido crear el Usuario " + ex.getMessage());
+        }
+        return false;
+    }
+
+    public Usuario obtenerUno(String email){
+        return this.bdUsu.obtenerUno(email);
+    }
+    
+    public boolean modificarUsuario(String id, String nom, String edad, String email, String password) {
+        try {
+            if (id.equals("") || nom.equals("") || edad.equals("") || email.equals("") || password.equals("")) {
+                return false;
+            } else {
+                int iEdad = Integer.parseInt(edad);
+                int iId = Integer.parseInt(id);
+                // Creamos el usuario
+                Usuario nuevoUsu = new Usuario(iId, nom, iEdad, email, password);
+                // Primero creamos el usuario (SI YA EXISTE SE MODIFICA)
+                if (!this.bdUsu.isAlive(nuevoUsu)) {
+                    boolean modificado = this.bdUsu.update(nuevoUsu);
+                    this.listaUsuarios = bdUsu.listar();
+                    return this.listaUsuarios != null && modificado;
+                }
+            }
+        } catch (Exception ex) {
+            System.err.println(" << ERROR: No se ha podido modificar el Usuario " + ex.getMessage());
         }
         return false;
     }
@@ -67,15 +94,8 @@ public class ServicioUsuarios {
                     break;
                 }
             }
-
             this.listaUsuarios.add(nuevoUsu);
         }
-        return false;
-    }
-
-    public boolean deleteUsuario(Usuario user) {
-        this.listaUsuarios.remove(user);
-        this.bdUsu.delete(user);
         return false;
     }
 
@@ -92,14 +112,26 @@ public class ServicioUsuarios {
         return listaUsuarios.size();
     }
 
-    public boolean deleteUsuario(String email, String passwd) {
-        for (Usuario user : listaUsuarios) {
-            if (user.getEmail().equals(email)) {
-                this.listaUsuarios.remove(user);
-                this.bdUsu.delete(user);
-                return true;
+    public boolean deleteUsuario(String id) {
+        try {
+            if (id.equals("")) {
+                return false;
+            } else {
+                Integer iId;
+                for (Usuario user : listaUsuarios) {
+                    iId = Integer.parseInt(id);
+                    if (user.getId().equals(id)) {
+                        boolean eliminado = this.listaUsuarios.remove(user);
+                        this.bdUsu.delete(iId);
+                        return this.listaUsuarios != null && eliminado;
+                    }
+                }
             }
+        } catch (Exception ex) {
+            System.err.println(" << ERROR: No se ha podido eliminar el Usuario " + ex.getMessage());
+            return false;
         }
+
         return false;
     }
 

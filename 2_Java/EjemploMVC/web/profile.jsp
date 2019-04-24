@@ -13,5 +13,8 @@
             <label style="font-weight: bolder">Edad</label><br>
             <label><% out.println(userLogged.getEdad()); %></label><br><br>
         </div>
+        <div>
+            <a href="">Modificar</a>
+        </div>
     </body>
 </html>
