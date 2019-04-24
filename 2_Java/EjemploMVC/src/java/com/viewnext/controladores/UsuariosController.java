@@ -36,14 +36,36 @@ public class UsuariosController extends HttpServlet {
             String email = request.getParameter("email");
             String edad = request.getParameter("eda");
             String passwd = request.getParameter("pass");
-            
-            boolean realizado = ServicioUsuarios.getInstancia().addUsuario(nom, edad, email, passwd);
-            if(realizado){  
-                out.println("<h3>Registrado correctamente</h3>");
-            }else{
-                out.println("<h3>No se ha Registrado</h3>");
+            String accion = request.getParameter("accion");
+            boolean realizado;
+            switch (accion) {
+                case "registro":
+                    realizado = ServicioUsuarios.getInstancia().addUsuario(nom, edad, email, passwd);
+                    if (realizado) {
+                        out.println("<h3>Registrado correctamente</h3>");
+                    } else {
+                        out.println("<h3>No se ha Registrado</h3>");
+                    }
+                    break;
+                case "login":
+                    realizado = ServicioUsuarios.getInstancia().setUserLogged(email, passwd);
+                    if (realizado) {
+                        out.println("<h3>Logueado correctamente</h3>");
+                        out.println("<a href='profile.jsp'>Ir a mi perfil</a>");
+                    } else {
+                        out.println("<h3>No se ha podido loguear</h3>");
+                        out.println("<a href='index.jsp'>Volver a intentar</a>");
+                    }
+                    break;
+                case "delete":
+                    break;
+                case "update":
+                    break;
+                    
             }
-            
+
+        }catch(Exception ex){
+            System.out.println(" >>>>> Error Usuario.do" + ex.getMessage());
         }
     }
 

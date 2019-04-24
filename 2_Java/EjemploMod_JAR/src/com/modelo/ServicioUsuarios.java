@@ -103,9 +103,9 @@ public class ServicioUsuarios {
         return false;
     }
 
-    public boolean setUserLogged(String email) {
+    public boolean setUserLogged(String email, String passwd) {
         for (Usuario usu : listaUsuarios) {
-            if (usu.getEmail().equals(email)) {
+            if (usu.getEmail().equals(email) && usu.getPassword().equals(passwd)) {
                 this.userLogged = usu;
                 return true;
             }

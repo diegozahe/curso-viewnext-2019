@@ -5,4 +5,5 @@
     <a href="login.jsp">Login</a>
     <a href="registro.jsp">Formulario registro</a>
     <a href="listar.jsp">Listado</a>
+    <a href="login.jsp">Login</a>
 </nav>
