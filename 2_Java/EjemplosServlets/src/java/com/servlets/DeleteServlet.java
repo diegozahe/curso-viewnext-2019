@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.servlets;
 
-import com.modelo.DerbyDBUsuario;
+
 import com.modelo.ServicioUsuarios;
-import com.modelo.Usuario;
+import com.modelo.ServicioUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Default
+ * @author Formacion
  */
-public class RegistroServlet extends HttpServlet {
+public class DeleteServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,65 +29,38 @@ public class RegistroServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            boolean camposOk = true;
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Leyendo parámetros ParamServlet</title>");
+            out.println("<title>Servlet Delete</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Devolviendo sus datos del registro</h1>");
-            out.println("<p>Peticion URL: " + request.getContextPath() + "</p>");
-            String nombre = request.getParameter("nom");
-            String passwd = request.getParameter("pass");
-            String edad = request.getParameter("eda");
+
+            String password = request.getParameter("passwd");
             String email = request.getParameter("email");
-            int iEdad = 0;
-            boolean camposOk = true;
-            
-            if(nombre.equals("")){
-                out.println("<p style='background-color:red'>Rellene el nombre</p>");
+
+            if (email.isEmpty()) {
+                out.println("<p>Rellene el email</p>");
                 camposOk = false;
-            }else{
-                out.println("<p>Te llamas " + nombre + "</p>");
             }
-            if(passwd.equals("")){
+            if (password.isEmpty()) {
+                out.println("<p>Rellene la contraseña</p>");
                 camposOk = false;
-                out.println("<p style='background-color:red'>Rellene la contraseña:</p>");
-            }else{
-                out.println("<p>Contraseña: " + passwd + "</p>");
             }
-            if(edad.equals("")){
-                camposOk = false;
-                out.println("<p style='background-color:red'>Rellene la edad:</p>");
-            }else{
-                iEdad = Integer.parseInt(edad);
-                if(iEdad < 18){
-                    camposOk = false;
-                    out.println("<p style='background-color:red'>Tienes menos de 18 años</p>");
-                }else{
-                    out.println("<p>Tienes " + edad + " años</p>");
-                }
+
+            if (camposOk) {
+                ServicioUsuarios su = ServicioUsuarios.getInstancia();                
+                su.deleteUsuario(email, password);
+                out.println("<h2>Usuario eliminado. Total de usuarios = " 
+                        + su.cantidadUsuarios() + "</h2>");
             }
-            if(email.equals("")){
-                camposOk = false;
-                out.println("<p style='background-color:red'>Rellene el email:</p>");
-            }else{
-                out.println("<p>Tu correo electronico es " + email + "</p>");
-            }
-            
-            if(camposOk)
-            {
-                ServicioUsuarios su = ServicioUsuarios.getInstancia();
-                su.addUsuario(nombre, Integer.parseInt(edad), email, passwd);
-                out.println("<h2>Usuario añadido. Total usuarios = " + su.cantidadUsuarios() + "</h2>");
-            }
-            
             out.println("</body>");
             out.println("</html>");
         }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -130,5 +99,7 @@ public class RegistroServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
+
+

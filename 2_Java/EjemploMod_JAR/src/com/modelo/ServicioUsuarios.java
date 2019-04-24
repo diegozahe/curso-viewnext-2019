@@ -6,6 +6,7 @@
 package com.modelo;
 
 import java.util.ArrayList;
+import javax.sound.midi.SysexMessage;
 
 /**
  * Esto es una simulacion de un Modelo en la estructura MVC (modelo, vista,
@@ -37,27 +38,39 @@ public class ServicioUsuarios {
     Usuario userLogged;
     private final ArrayList<Usuario> listaUsuarios;
 
-    public boolean addUsuario(String nom, int edad, String email, String password) {
-        // Creamos el usuairo
-        Usuario nuevoUsu = new Usuario(nom, edad, email, password);
+    public boolean addUsuario(String nom, String edad, String email, String password) {
+        try {
+            if (nom.equals("") || edad.equals("") || email.equals("") || password.equals("")) {
+                return false;
+            } else {
+                int iEdad = Integer.parseInt(edad);
+                // Creamos el usuario
+                Usuario nuevoUsu = new Usuario(nom, Integer.parseInt(edad), email, password);
+                // Primero creamos el usuario (SI YA EXISTE SE MODIFICA)
+                if (!this.bdUsu.isAlive(nuevoUsu)) {
+                    this.bdUsu.crear(nuevoUsu);
+                    return this.listaUsuarios.add(nuevoUsu);
+                }
+            }
+        } catch (Exception ex) {
+            System.err.println(" << ERROR: No se ha podido crear el Usuario " + ex.getMessage());
+        }
+        return false;
+    }
 
-        // Primero creamos el usuario (SI YA EXISTE SE MODIFICA)
+    public boolean updateUsuario(Usuario nuevoUsu) {
         if (this.bdUsu.isAlive(nuevoUsu)) {
             this.bdUsu.update(nuevoUsu);
             for (Usuario usu : listaUsuarios) {
-                if (usu.getEmail().equals(email)) {
+                if (usu.getEmail().equals(nuevoUsu.getEmail())) {
                     listaUsuarios.remove(usu);
                     break;
                 }
             }
 
             this.listaUsuarios.add(nuevoUsu);
-
-        } else {
-            this.bdUsu.crear(nuevoUsu);
-            this.listaUsuarios.add(nuevoUsu);
         }
-        return true;
+        return false;
     }
 
     public boolean deleteUsuario(Usuario user) {
@@ -78,8 +91,8 @@ public class ServicioUsuarios {
     public int cantidadUsuarios() {
         return listaUsuarios.size();
     }
-    
-     public boolean deleteUsuario(String email, String passwd) {
+
+    public boolean deleteUsuario(String email, String passwd) {
         for (Usuario user : listaUsuarios) {
             if (user.getEmail().equals(email)) {
                 this.listaUsuarios.remove(user);
@@ -89,7 +102,8 @@ public class ServicioUsuarios {
         }
         return false;
     }
-    public boolean setUserLogged(String email){
+
+    public boolean setUserLogged(String email) {
         for (Usuario usu : listaUsuarios) {
             if (usu.getEmail().equals(email)) {
                 this.userLogged = usu;
@@ -98,15 +112,13 @@ public class ServicioUsuarios {
         }
         return false;
     }
-    
-    public Usuario getUserLogged(){
+
+    public Usuario getUserLogged() {
         return this.userLogged;
     }
-    
-    public ArrayList<Usuario> listar(){
+
+    public ArrayList<Usuario> listar() {
         return this.listaUsuarios;
     }
-    
-    
-    
+
 }

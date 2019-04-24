@@ -22,6 +22,10 @@
         <servlet-name>UpdateServlet</servlet-name>
         <servlet-class>com.servlets.UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>com.servlets.DeleteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HolaServlet</servlet-name>
         <url-pattern>/hola</url-pattern>
@@ -41,5 +45,9 @@
     <servlet-mapping>
         <servlet-name>UpdateServlet</servlet-name>
         <url-pattern>/UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
     </servlet-mapping>
 </web-app>

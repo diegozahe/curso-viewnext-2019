@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<%@include file="head.jsp" %>
 <html>
-    <head>
-        <title>Formulario registro</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+    <%= head() %>
     <body>
-        <form name="form1" method="post" action="/EjemplosServlets/RegistroServlet">
+        <%@include file="header.jsp" %>
+        <h2>Registro</h2>
+        <form name="form1" method="post" action="./usuarios.do">
             <table border="1">
                 <tr>
                     <td>Nombre:</td>
@@ -20,7 +13,7 @@ and open the template in the editor.
                     </td>
                 </tr>
                 <tr>
-                    <td>ContraseÃ±a:</td>
+                    <td>Contraseña</td>
                     <td>
                         <input type="password" name="pass" id="pass" size="25" value="1234" required="required"/>
                     </td>
@@ -28,17 +21,18 @@ and open the template in the editor.
                 <tr>
                     <td>Edad:</td>
                     <td>
-                        <input type="number" name="eda" id="eda" size="25" value="27"/>
+                        <input type="number" name="eda" id="eda" size="25" value="36"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Email:</td>
                     <td>
-                        <input type="email" name="email" id="email" size="25" value="email@hotmail.com" required="required"/>
+                        <input type="email" name="email" id="email" size="25" value="correo@gmail.com" required="required"/>
                     </td>
                 </tr>
             </table>
-                <input type="submit" value="Enviar"/>
+                <input type="submit" value="Actualizar"/>
         </form>
+        <h1>Hello World!</h1>
     </body>
 </html>
